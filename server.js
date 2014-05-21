@@ -52,7 +52,7 @@ var DEFAULT_HOST	= '127.0.0.1',
 	},
 	config = (function AutoConfigure(data, default_data) {
 		configs = {};
-		
+
 		for (i in default_data)
 			configs[i] = data[i] || default_data[i];
 
