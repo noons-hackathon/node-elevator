@@ -1,0 +1,19 @@
+<html>
+<head>
+	<title>Node Elevator</title>
+	<style type="text/css">
+	</style>
+</head>
+<body>
+	<script src="http://{{DEFAULT_HOST}}:{{DEFAULT_PORT}}/socket.io/node_modules/socket.io-client/dist/socket.io.min.js"></script>
+	<script src="http://{{DEFAULT_HOST}}:{{DEFAULT_PORT}}/jquery/dist/jquery.min.js"></script>
+	<script>
+	var socket = io.connect('http://{{DEFAULT_HOST}}:{{DEFAULT_IO_PORT}}');
+	$(document).ready(function () {
+		socket.on('feed', function (data) {
+			console.log('SocketIO received', data);
+		});
+	});
+	</script>
+</body>
+</html>

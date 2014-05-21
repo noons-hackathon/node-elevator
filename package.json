@@ -1,0 +1,19 @@
+{
+    "name"          : "node-elevator",
+    "description"   : "É um simulador de elevadores. Desenvolvido apenas para proprósitos acadêmicos. Para aprendermos NodeJS e ES6.",
+    "version"       : "0.0.1",
+    "private"       : false,
+    "author"        : "John Murowaniecki <jmurowaniecki@gmail.com> (http://jmurowaniecki.github.com)",
+    "engines"       : {
+        "node"      : "0.8.14",
+        "npm"       : "1.1.65"
+    },
+    "scripts"       : {
+        "start"     : "nodemon start"
+    },
+    "dependencies"  : {
+        "jquery"   : "latest",
+        "express"   : "latest",
+        "socket.io" : "latest"
+    }
+}
