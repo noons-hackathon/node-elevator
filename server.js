@@ -49,7 +49,19 @@ var DEFAULT_HOST	= '127.0.0.1',
 				return stream.end(document);
 			});
 		}
-	};
+	},
+	config = (function AutoConfigure(data, default_data) {
+		configs = {};
+		
+		for (i in default_data)
+			configs[i] = data[i] || default_data[i];
+
+		return configs;
+	})(process.argv, {
+		elevators: 3,
+		floors: 15,
+		capacity: 1
+	});
 
 app.get('/', function (req, res) {
 	utils.sendParsedFile(__dirname + '/views/index.html', res);
