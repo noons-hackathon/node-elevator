@@ -57,7 +57,7 @@ var DEFAULT_HOST	= '127.0.0.1',
 			configs[i] = data[i] || default_data[i];
 
 		return configs;
-	})(process.argv, {
+	})(process.argv, { // default values to create elevators
 		elevators: 3,
 		floors: 15,
 		capacity: 1
@@ -65,6 +65,15 @@ var DEFAULT_HOST	= '127.0.0.1',
 
 app.get('/', function (req, res) {
 	utils.sendParsedFile(__dirname + '/views/index.html', res);
+});
+
+io.sockets.on('connection', function (socket) {
+
+	socket.emit('feed', {server:'initialized'});
+
+	socket.on('broadcast', function (data) {
+		socket.broadcast.emit('feed', data);
+	});
 });
 
 // Default 404 error page routing

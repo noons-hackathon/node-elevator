@@ -10,6 +10,9 @@
 	<script>
 	var socket = io.connect('http://{{DEFAULT_HOST}}:{{DEFAULT_IO_PORT}}');
 	$(document).ready(function () {
+		socket.on('connect', function (data) {
+			console.log('SocketIO connected', data);
+		});
 		socket.on('feed', function (data) {
 			console.log('SocketIO received', data);
 		});
