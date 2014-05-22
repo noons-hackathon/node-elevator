@@ -1,43 +1,21 @@
-var app = require('http').createServer(handler)
-  , io = require('socket.io').listen(app)
-  , fs = require('fs')
+var app 		= require('http').createServer(handler)
+  , io 			= require('socket.io').listen(app)
+  , fs 			= require('fs')
+  , Building 	= require('./building')
+  , Person	 	= require('./person') 
 app.listen(8080);
 
 if(process.argv.length < 4){
 	throw new Error('É obrigatório passar o número de eladores e de andares');
 }
 
-console.log("                                 ___           ___           ___           ___     ");
-console.log("                                /\\__\\         /\\  \\         /\\  \\         /\\  \\    ");
-console.log("                               /::|  |       /::\\  \\       /::\\  \\       /::\\  \\   ");
-console.log("                              /:|:|  |      /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\  ");
-console.log("                             /:/|:|  |__   /:/  \\:\\  \\   /:/  \\:\\__\\   /::\\~\\:\\  \\ ");
-console.log("                            /:/ |:| /\\__\\ /:/__/ \\:\\__\\ /:/__/ \\:|__| /:/\\:\\ \\:\\__\\");
-console.log("                            \\/__|:|/:/  / \\:\\  \\ /:/  / \\:\\  \\ /:/  / \\:\\~\\:\\ \\/__/");
-console.log("                                |:/:/  /   \\:\\  /:/  /   \\:\\  /:/  /   \\:\\ \\:\\__\\  ");
-console.log("                                |::/  /     \\:\\/:/  /     \\:\\/:/  /     \\:\\ \\/__/  ");
-console.log("                                /:/  /       \\::/  /       \\::/__/       \\:\\__\\    ");
-console.log("                                \\/__/         \\/__/         ~~            \\/__/    ");
-console.log("       ___           ___       ___           ___           ___           ___           ___           ___     ");
-console.log("      /\\  \\         /\\__\\     /\\  \\         /\\__\\         /\\  \\         /\\  \\         /\\  \\         /\\  \\    ");
-console.log("     /::\\  \\       /:/  /    /::\\  \\       /:/  /        /::\\  \\        \\:\\  \\       /::\\  \\       /::\\  \\   ");
-console.log("    /:/\\:\\  \\     /:/  /    /:/\\:\\  \\     /:/  /        /:/\\:\\  \\        \\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\  ");
-console.log("   /::\\~\\:\\  \\   /:/  /    /::\\~\\:\\  \\   /:/__/  ___   /::\\~\\:\\  \\       /::\\  \\   /:/  \\:\\  \\   /::\\~\\:\\  \\ ");
-console.log("  /:/\\:\\ \\:\\__\\ /:/__/    /:/\\:\\ \\:\\__\\  |:|  | /\\__\\ /:/\\:\\ \\:\\__\\     /:/\\:\\__\\ /:/__/ \\:\\__\\ /:/\\:\\ \\:\\__\\");
-console.log("  \\:\\~\\:\\ \\/__/ \\:\\  \\    \\:\\~\\:\\ \\/__/  |:|  |/:/  / \\/__\\:\\/:/  /    /:/  \\/__/ \\:\\  \\ /:/  / \\/_|::\\/:/  /");
-console.log("   \\:\\ \\:\\__\\    \\:\\  \\    \\:\\ \\:\\__\\    |:|__/:/  /       \\::/  /    /:/  /       \\:\\  /:/  /     |:|::/  / ");
-console.log("    \\:\\ \\/__/     \\:\\  \\    \\:\\ \\/__/     \\::::/__/        /:/  /     \\/__/         \\:\\/:/  /      |:|\\/__/  ");
-console.log("     \\:\\__\\        \\:\\__\\    \\:\\__\\        ~~~~           /:/  /                     \\::/  /       |:|  |    ");
-console.log("      \\/__/         \\/__/     \\/__/                       \\/__/                       \\/__/         \\|__|    ");
-
+require('./header.js').print();
 
 console.log('Elevadores', process.argv[2]);
 console.log('Andares', process.argv[3]);
 
 function handler (req, res) {
-	console.log(req.url);
-
-	var fileToSend = ''
+	var fileToSend = req.url;
 
 	if(req.url == '/'){
 		fileToSend = '/index.html';
@@ -58,9 +36,51 @@ function handler (req, res) {
 	);
 }
 
+
+/*
+  ===================================
+*/
+
+
+var building = new Building({
+	elevators: parseInt(process.argv[2]),
+	floors: parseInt(process.argv[3])
+});
+
+console.log(building,1); 
+io.set('log level', 1);
 io.sockets.on('connection', function (socket) {
 	socket.emit('news', { hello: 'world' });
 	socket.on('my other event', function (data) {
 		console.log(data);
 	});
-});
+
+	socket.on('enter-building', function (data) {
+		console.log('-----------',data.name + ' entrou no prédio.');
+
+		building.persons.push(new Person({name: data.name}));
+
+		socket.emit('handshake', { 
+			message: 'Hello '+data.name+'. Welcome to my building!',
+			persons: building.persons,
+			elevators: building.elevators 
+		});
+
+	});
+
+	socket.on('person-send-message', function (data) {
+		console.log('--- MESSAGE --- ' + data.message);
+		socket.broadcast.emit('person-receive-message', { 
+			message: data.message,
+		});
+
+	});
+
+	
+}); 
+
+
+
+
+
+

@@ -1,8 +1,27 @@
 <script src="io.js"></script>
 <script>
   var socket = io.connect('http://localhost:8080');
+
+  var name = window.prompt('Qual seu nome ?');
+  if(name == null) name = 'Mendigo';
+
   socket.on('news', function (data) {
     console.log(data);
-    socket.emit('my other event', { my: 'data' });
+    socket.emit('enter-building', { name: name });
   });
+
+  socket.on('handshake', function (data) {
+    console.log(data);
+  });
+
+  socket.on('person-receive-message',function(data){
+  	console.log(data.message);
+  })
+
+  function msg(msg){
+
+  	socket.emit('person-send-message', { message: name + ' diz: ' + msg });
+
+  }
+
 </script>
