@@ -1,0 +1,25 @@
+{
+  "name": "node-elevator",
+  "version": "0.0.0",
+  "description": "Gestor de elevadores.",
+  "main": "server.js",
+  "scripts": {
+    "test": "node --harmony server.js"
+  },
+  "dependencies": {
+    "socket.io": "~0.9.16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/noons-hackathon/node-elevator.git"
+  },
+  "keywords": [
+    "elevador"
+  ],
+  "author": "Sandro Santos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noons-hackathon/node-elevator/issues"
+  },
+  "homepage": "https://github.com/noons-hackathon/node-elevator"
+}
