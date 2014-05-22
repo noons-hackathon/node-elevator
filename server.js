@@ -61,7 +61,16 @@ var DEFAULT_HOST	= '127.0.0.1',
 		elevators: 3,
 		floors: 15,
 		capacity: 1
-	});
+	}),
+	elevators = (function elevator_generator(config) {
+		var elevators = [];
+
+		for (var n = 0; n < config.elevators; n++) {
+			var elevator = require('./elevator.js');
+			console.log('elevator', elevator);
+			elevators.push(elevator);
+		}
+	})(config);
 
 app.get('/', function (req, res) {
 	utils.sendParsedFile(__dirname + '/views/index.html', res);
