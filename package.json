@@ -1,0 +1,19 @@
+{
+  "name": "node-elevator",
+  "version": "0.0.1",
+  "description": "Project to lear Node and ES6",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/noons-hackathon/node-elevator.git"
+  },
+  "author": "Cristiano Becker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noons-hackathon/node-elevator/issues"
+  },
+  "homepage": "https://github.com/noons-hackathon/node-elevator"
+}
