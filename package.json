@@ -1,0 +1,27 @@
+{
+  "name": "node-elevator",
+  "version": "0.0.1",
+  "description": "An elevator simulator",
+  "main": "main.js",
+  "dependencies": {
+    "socket.io": "~0.9.16"
+  },
+  "scripts": {
+    "test": "node --harmony main.js",
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noons-hackathon/node-elevator.git"
+  },
+  "keywords": [
+    "simulator",
+    "elevator",
+    "research"
+  ],
+  "author": "Anderson Almeida",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/noons-hackathon/node-elevator/issues"
+  }
+}

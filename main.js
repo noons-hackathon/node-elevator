@@ -1,5 +1,7 @@
 // Carrega a biblioteca HTTP do Node.js.
-var http = require('http');
+var http = require('http'),
+	io = require('socket.io').listen(app);
+
 // Cria um serviço web para tratar a requisição de resposta da mensagem Hello World.
 var server = http.createServer(function (request, response) {
 	// Define os parâmetros de cabeçalho de resposta.
@@ -9,6 +11,7 @@ var server = http.createServer(function (request, response) {
 	// Envia uma resposta para o cliente
 	response.end();
 });
+
 // Define a porta e IP que será executado a aplicação.
 server.listen(8080);
 // Imprime mensagem no terminal do servidor.
