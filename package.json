@@ -9,7 +9,7 @@
         "npm"       : "1.1.65"
     },
     "scripts"       : {
-        "start"     : "nodemon start"
+        "start"     : "nodemon server"
     },
     "dependencies"  : {
         "jquery"   : "latest",
