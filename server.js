@@ -50,7 +50,7 @@ var building = new Building({
 console.log(building,1); 
 io.set('log level', 1);
 io.sockets.on('connection', function (socket) {
-	socket.emit('news', { hello: 'world' });
+	socket.emit('news', { message: 'Welcome to the Node-Elevator!!!' });
 	socket.on('my other event', function (data) {
 		console.log(data);
 	});
@@ -58,19 +58,25 @@ io.sockets.on('connection', function (socket) {
 	socket.on('enter-building', function (data) {
 		console.log('-----------',data.name + ' entrou no prédio.');
 
-		building.persons.push(new Person({name: data.name}));
+		var newPerson = new Person({id: building.persons.length+1, name: data.name});
+
+		building.persons.push(newPerson);
 
 		socket.emit('handshake', { 
 			message: 'Hello '+data.name+'. Welcome to my building!',
 			persons: building.persons,
-			elevators: building.elevators 
+			elevators: building.elevators,
+			yourself: newPerson
 		});
 
+		socket.broadcast.emit('person-on-building', { 
+			list: building.persons,
+		});
 	});
 
 	socket.on('person-send-message', function (data) {
 		console.log('--- MESSAGE --- ' + data.message);
-		socket.broadcast.emit('person-receive-message', { 
+		socket.broadcast.emit('person-receive-message', {
 			message: data.message,
 		});
 
