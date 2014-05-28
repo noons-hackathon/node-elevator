@@ -5,6 +5,11 @@ var app 		= require('http').createServer(handler)
   , Person	 	= require('./person') 
 app.listen(8080);
 
+
+
+
+
+
 if(process.argv.length < 4){
 	throw new Error('É obrigatório passar o número de eladores e de andares');
 }
@@ -21,6 +26,8 @@ function handler (req, res) {
 		fileToSend = '/index.html';
 	} else if(req.url == '/io.js'){
 		fileToSend = '/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js';
+	} else {
+		fileToSend = req.url;
 	}
 
 	fs.readFile(__dirname + fileToSend,
@@ -85,8 +92,4 @@ io.sockets.on('connection', function (socket) {
 	
 }); 
 
-
-
-
-
-
+console.log('Started at :',new Date());

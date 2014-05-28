@@ -2,14 +2,19 @@
     <head>
         <meta charset="utf-8">
         <title>Node-Elevator.</title>
+        
         <script src="io.js"></script>
-
+        
+        <script src="person.js"></script>
+        <script src="floor.js"></script>
+        <script src="elevator.js"></script>
+        <script src="building.js"></script>
         <script>
           var socket = io.connect('http://'+location.host);
           var me = null;
           var name = window.prompt('Qual seu nome ?');
-          if(name == null) name = 'Mendigo';
-
+          if(name == 'null' || name.length == 0) name = 'Mendigo da Avenida ' + Date.now();
+          console.log(name);
           socket.on('news', function (data) {
             console.log(data);
             socket.emit('enter-building', { name: name });
@@ -17,7 +22,7 @@
 
           socket.on('handshake', function (data) {
             console.log(data);
-            me = data.yourself;
+            me = new Person(data.yourself);
             logOnChat(data.message);
             renderPeopleList(data.persons);
 

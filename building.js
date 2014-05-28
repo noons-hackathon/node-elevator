@@ -1,5 +1,7 @@
-module.exports = function(config){
-	var Elevator = require('./elevator');
+function Building(config){
+	if(global) {
+		var Elevator = require('./elevator');
+	}
 
 	this.persons = [];
 	this.elevators = [];
@@ -9,4 +11,8 @@ module.exports = function(config){
 
 	}
 
+}
+
+if(typeof global != 'undefined'){
+	module.exports = Building;
 }

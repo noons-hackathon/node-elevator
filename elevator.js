@@ -1,4 +1,4 @@
-module.exports = function(){
+function Elevator(config){
 
 	var currentFloor = 0;
 	var personsInside = 0;
@@ -12,4 +12,8 @@ module.exports = function(){
 	}
 
 
+}
+
+if(typeof global != 'undefined'){
+	module.exports = Elevator;
 }
