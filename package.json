@@ -1,0 +1,29 @@
+{
+  "name": "node-elevator",
+  "version": "0.0.1",
+  "description": "My version of node-elevator",
+  "main": "server.js",
+  "dependencies": {
+    "socket.io": "~0.9.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node --harmony server.js 10 20",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/noons-hackathon/node-elevator.git"
+  },
+  "keywords": [
+    "node-elevator",
+    "elevator",
+    "simulator"
+  ],
+  "author": "João Mosmann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/noons-hackathon/node-elevator/issues"
+  },
+  "homepage": "https://github.com/noons-hackathon/node-elevator"
+}

@@ -1,0 +1,84 @@
+<head>
+    <head>
+        <meta charset="utf-8">
+        <title>Node-Elevator.</title>
+        
+        <script src="io.js"></script>
+        
+        <script src="person.js"></script>
+        <script src="floor.js"></script>
+        <script src="elevator.js"></script>
+        <script src="building.js"></script>
+        <script>
+          var socket = io.connect('http://'+location.host);
+          var me = null;
+          var name = window.prompt('Qual seu nome ?');
+          if(name == 'null' || name.length == 0) name = 'Mendigo da Avenida ' + Date.now();
+          console.log(name);
+          socket.on('news', function (data) {
+            console.log(data);
+            socket.emit('enter-building', { name: name });
+          });
+
+          socket.on('handshake', function (data) {
+            console.log(data);
+            me = new Person(data.yourself);
+            logOnChat(data.message);
+            renderPeopleList(data.persons);
+
+          });
+
+          socket.on('person-receive-message',function(data){
+            console.log(data.message);
+            logOnChat(data.message);
+          });
+
+          socket.on('person-on-building',function(data){
+            console.log(data.list);
+            renderPeopleList(data.list);          
+          });
+
+          function msg(msg){
+            var m = name + ' diz: ' + msg;
+            logOnChat(m);
+            socket.emit('person-send-message', { message: m });
+          }
+
+          function renderPeopleList(list){  
+
+            person_list.innerHTML = '';
+            list.forEach(function(p){
+              var a = document.createElement('li');
+              a.innerHTML = p.name;
+              if(p.id === me.id) a.style.fontWeight = 'bold';
+              person_list.appendChild(a);
+            });
+
+          }
+
+          function logOnChat(message){
+            var a = document.createElement('li');
+            a.innerHTML = message;
+            messages.appendChild(a);
+          }
+
+      </script>  
+    </head>
+    <body class="loading">
+
+      <div>
+        <h3>Pessoas no prédio</h3>
+        <ul id="person_list">
+          
+        </ul>
+      </div>
+
+      <div>
+        <h3>Log</h3>
+        <ul id="messages">
+          
+        </ul>
+      </div>
+
+  </body>
+</html>
